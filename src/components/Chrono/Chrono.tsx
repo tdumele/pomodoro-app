@@ -1,11 +1,13 @@
-import { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
+import { useEffect, useState } from "react";
+import useSound from "use-sound";
+import bell from "../../assets/sound/bell.wav";
 
 function Chrono() {
   const [edition, setEdition] = useState(false);
   const [base, setBase] = useState(25);
   const [decrement, setDecrement] = useState(25 * 60);
   const [tempo, setTempo] = useState(0);
+  const [playBell] = useSound(bell);
 
   useEffect(() => {
     if (decrement === 0) {
@@ -16,8 +18,13 @@ function Chrono() {
   function start() {
     setTempo(
       setInterval(() => {
-        setDecrement((secondes) => secondes - 1);
-      }, 100)
+        if (decrement > 0) {
+          setDecrement((secondes) => secondes - 1);
+        } else {
+          playBell();
+          clearInterval(tempo);
+        }
+      }, 1000)
     );
 
     return () => {
@@ -25,13 +32,13 @@ function Chrono() {
     };
   }
 
-  function breakTempo() {
+  function stop() {
     clearInterval(tempo);
     setTempo(0);
   }
 
   function reset() {
-    breakTempo();
+    stop();
     setDecrement(() => base * 60);
   }
 
@@ -74,11 +81,11 @@ function Chrono() {
       )}
       <div className="action_btn">
         {tempo ? (
-          <button onClick={breakTempo}>Break</button>
+          <button onClick={stop}>STOP</button>
         ) : (
-          <button onClick={start}>Start</button>
+          <button onClick={start}>START</button>
         )}
-        <button onClick={reset}>Reset</button>
+        <button onClick={reset}>RESET</button>
       </div>
     </div>
   );
