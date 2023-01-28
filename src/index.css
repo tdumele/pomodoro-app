@@ -33,9 +33,10 @@ body {
   font-size: 50px;
   padding-top: 70px;
   text-align: center;
-font-family: Louis-George-Cafe;
+  font-family: Louis-George-Cafe;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 20px;
   width: 300px;
   border: none;
   background: none;
@@ -44,6 +45,10 @@ font-family: Louis-George-Cafe;
 .chrono > input:focus {
     border: none;
     outline: none;
+}
+
+.chrono > input::-webkit-inner-spin-button {
+    display: none;
 }
 
 .action_btn {
