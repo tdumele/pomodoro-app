@@ -17,7 +17,7 @@ function Chrono() {
 
   function start() {
     setTempo(
-      setInterval(() => {
+      window.setInterval(() => {
         if (decrement > 0) {
           setDecrement((secondes) => secondes - 1);
         } else {
